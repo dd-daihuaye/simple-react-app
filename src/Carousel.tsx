@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Carousel.css';
 
 type CarouselProps = {
@@ -8,9 +8,14 @@ type CarouselProps = {
 const Carousel: React.FC<CarouselProps> = ({ items }) => {
   const [index, setIndex] = useState(0);
 
-  const next = () => {
-    setIndex((prev) => (prev + 1) % items.length);
-  };
+  useEffect(() => {
+    const delay = index === 0 ? 5500 : 3500;
+    const timer = setTimeout(() => {
+      setIndex((prev) => (prev + 1) % items.length);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [index, items.length]);
 
   return (
     <div className="carousel-container">
@@ -24,9 +29,6 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
           </div>
         ))}
       </div>
-      <button className="next-button" onClick={next} aria-label="Next">
-        ›
-      </button>
     </div>
   );
 };
