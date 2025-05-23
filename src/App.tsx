@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="App">
-      <Carousel items={items.map((text) => <div>{text}</div>)} />
+      <Carousel items={items.map((text) => <div>{text}</div>)} visibleCards={2} />
     </div>
   );
 }
