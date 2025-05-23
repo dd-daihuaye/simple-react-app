@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Carousel.css';
+import useCarousel from './hooks/useCarousel';
 
 type CarouselProps = {
   items: React.ReactNode[];
+  autoPlay?: boolean;
+  delay?: number;
+  firstDelay?: number;
 };
 
-const Carousel: React.FC<CarouselProps> = ({ items }) => {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const delay = index === 0 ? 5500 : 3500;
-    const timer = setTimeout(() => {
-      setIndex((prev) => (prev + 1) % items.length);
-    }, delay);
-
-    return () => clearTimeout(timer);
-  }, [index, items.length]);
+const Carousel: React.FC<CarouselProps> = ({ items, autoPlay = true, delay, firstDelay }) => {
+  const { index, next, prev } = useCarousel(items.length, { autoPlay, delay, firstDelay });
 
   return (
     <div className="carousel-container">
@@ -29,6 +24,12 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
           </div>
         ))}
       </div>
+      <button className="prev-button" onClick={prev} aria-label="Previous">
+        ‹
+      </button>
+      <button className="next-button" onClick={next} aria-label="Next">
+        ›
+      </button>
     </div>
   );
 };
