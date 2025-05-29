@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Carousel from './Carousel';
+import CountryList from './CountryList';
 
 function App() {
   const items = [
@@ -14,6 +15,7 @@ function App() {
   return (
     <div className="App">
       <Carousel items={items.map((text) => <div>{text}</div>)} visibleCards={2} />
+      <CountryList />
     </div>
   );
 }
